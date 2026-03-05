@@ -22,7 +22,7 @@ A security application that monitors PFSense firewall configurations for unautho
 
 ```bash
 # Clone the repository
-git clone https://github.com/cs64-net/dcm_pfsense_apt_manager.git
+git clone https://github.com/funkyak/pfsesne-manager
 cd dcm-pfsense-apt-manager
 
 # Start with Docker
