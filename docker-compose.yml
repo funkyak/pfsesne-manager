@@ -1,0 +1,31 @@
+services:
+  # Web Interface Service
+  dcm-web:
+    build: .
+    container_name: dcm-apt-manager-web
+    ports:
+      - "${WEB_PORT:-8080}:5000"
+    volumes:
+      - dcm-data:/data
+      - ./logs:/app/logs
+    environment:
+      - DCM_DATA_DIR=${DCM_DATA_DIR:-/data}
+      - FLASK_ENV=${FLASK_ENV:-production}
+    command: python web.py
+    restart: unless-stopped
+    networks:
+      - dcm-network
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:5000/api/status', auth=('admin', 'admin'))"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+volumes:
+  dcm-data:
+    driver: local
+
+networks:
+  dcm-network:
+    driver: bridge
